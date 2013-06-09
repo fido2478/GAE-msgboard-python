@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Compose a message{% endblock %}
+{% block navbar %}
+	<ul class="nav">
+		<li class="active"><a href="#">+ Add Post</a></li>
+	</ul>
+
+{% endblock %}
+{% block content_top %}
+<div id="message_input" class="container">
+<h3>Compose a message</h3>
+	<form id="message_form" name="message_form" action="/add" method="post">
+		<table style="width:600px">
+		<tr>
+			<td><label for="author">Author: <font style="color:red">*</font></label></td>
+			<td><input id="author" type="text" name="author" required></td>
+		</tr><tr>
+			<td><label for="subject">Subject: <font style="color:red">*</font></label></td>
+			<td><input id="subject" type="text" name="subject" required></td>
+		</tr><tr>
+			<td><label for="message">Message: <font style="color:red">*</font></label></td>
+			<td><textarea id="message" name="message_body" required></textarea></td>
+		</tr><tr>
+			<td></td><td><input class="btn btn-primary" type="submit" value="submit"></td>
+		</tr>
+		</table>
+	</form>
+	<script>
+	$("#message_form").validate();
+	</script>
+</div>
+{% endblock %}
+{% block content_bottom %}
+<div id="message_list" class="container">
+
+	<table class="table table-striped">
+	<thead style="background: #cee3f6">
+	<tr>
+		<td>Subject</td>
+		<td>Message</td>
+		<td>Author</td>
+		<td>Date</td>
+	</tr>
+	<tbody>
+	{% for msg_post in msg_posts %}
+	<tr>
+		<td><span style="font-style:italic"><a href="/view/{{ msg_post.key.id }}">{{ msg_post.subject|slice:"30" }}</a></span></td>
+		<td><a href="/view/{{ msg_post.key.id }}">{{ msg_post.body|slice:"40" }}</a></td>
+		<td><span class="label label-inverse">{{ msg_post.user }}</span></td>
+		<td>{{ msg_post.cr_dt }}</td>
+	</tr>
+	{% empty %}
+	<tr>
+		<td colspan="4"><p style="font-size: large; font-style: italic">Sorry, no posts available.</p></td>
+	</tr>	
+	{% endfor %}
+	</tbody>
+	</table>
+	<center><span class="label label-info">Pages</span></center>
+	<div class="pagination pagination-centered">
+	<ul>	
+		{% for i in page_range %}
+		<li> <a href="/list/{{ i }}">{{ i }}</a></li>
+		{% endfor %}
+	</ul>
+	</div>
+</div>
+{% endblock %}

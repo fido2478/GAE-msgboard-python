@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Viewing message: {{ msg_post.key.id }}{% endblock %}
+{% block navbar %}
+	<ul class="nav">
+		<li><a href="/list">+ Add Post</a></li>
+	</ul>
+
+{% endblock %}
+{% block content_top %}
+<div id="message_input" class="container">
+	<table style="width:600px">
+	<tr>
+		<td><p style="margin: 10px"><span class="label label-inverse">{{ msg_post.user }}</span> posted about {{ msg_post.cr_dt|timesince }} ago</p></td>
+	</tr><tr>
+		<td><p style="margin:10px;font-style:italic">{{ msg_post.subject }}</p></td>
+	</tr><tr>
+		<td style="border:1px #000 dashed; background: #cee3f6"><p style="margin: 10px">{{ msg_post.body }}</p></td>
+	</tr>
+	</table>
+</div>
+{% endblock %}
+{% block content_bottom %}
+<br><br>
+<div class="container">
+	<a class="btn btn-primary" href="/list">Back to messages</a>
+</div>
+{% endblock %}
